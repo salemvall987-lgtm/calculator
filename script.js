@@ -63,6 +63,9 @@ showNum();
 
 allOperators.forEach((allOperator)=> {
   allOperator.addEventListener('click', (e)=> {
+    if (firstNumber === '') {
+      return;
+    }
     operator = e.target.dataset.operator;
     showNum();
   })
@@ -76,3 +79,20 @@ reset.addEventListener('click', (e) => {
   showNum();
 })
 console.log(firstNumber, operator, secondNumber)
+
+let equalsButton = document.querySelector('.result');
+equalsButton.addEventListener('click', ()=> {
+  if (operator === '' || firstNumber === '' || secondNumber === '') {
+    return;
+  } 
+  calculatePair()
+  operator = '';
+  showNum();
+})
+function calculatePair() {
+  let answer = operate(operator, Number(firstNumber), Number(secondNumber));
+  firstNumber = String(answer);
+  secondNumber = '';
+};
+
+
