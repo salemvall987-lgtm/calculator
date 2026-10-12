@@ -42,6 +42,7 @@ function showNum() {
 
   if (operator !== '' && secondNumber !== '') {
     shown = secondNumber;
+    calculatePair();
   } else {
     shown = firstNumber;
   }
@@ -57,6 +58,7 @@ digits.forEach((digit)=> {
       secondNumber += e.target.textContent;
     }
     showNum();
+
   })
 })
 showNum();
@@ -65,10 +67,13 @@ allOperators.forEach((allOperator)=> {
   allOperator.addEventListener('click', (e)=> {
     if (firstNumber === '') {
       return;
-    }
-    operator = e.target.dataset.operator;
+    } 
+    
+
+        operator = e.target.dataset.operator;
     showNum();
   })
+
 })
 
 let reset = document.querySelector('.reset');
