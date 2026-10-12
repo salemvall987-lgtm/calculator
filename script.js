@@ -2,7 +2,7 @@
 let firstNumber = "";      // text: digits get glued on one at a time ("1" then "2" becomes "12")
 let operator = "";         // text: stores the button's symbol, like "+"; empty means none chosen yet
 let secondNumber = "";     // text: same reason as firstNumber; empty means not typed yet
-
+let justCalculated = false;
 
 function add(a,b) {
   return a+b;
@@ -42,7 +42,7 @@ function showNum() {
 
   if (operator !== '' && secondNumber !== '') {
     shown = secondNumber;
-    calculatePair();
+  
   } else {
     shown = firstNumber;
   }
@@ -52,13 +52,18 @@ function showNum() {
 
 digits.forEach((digit)=> {
   digit.addEventListener('click', (e)=>{
+
+    if (justCalculated) {
+      firstNumber = '';
+      justCalculated = false;
+    }
+
     if (operator === '') {
     firstNumber += e.target.textContent;
     } else {
       secondNumber += e.target.textContent;
     }
     showNum();
-
   })
 })
 showNum();
@@ -68,10 +73,13 @@ allOperators.forEach((allOperator)=> {
     if (firstNumber === '') {
       return;
     } 
-    
-
-        operator = e.target.dataset.operator;
+    if (operator !== '' && secondNumber !== '') {
+      calculatePair();
+    }
+    operator = e.target.dataset.operator;
+    justCalculated = false;
     showNum();
+    
   })
 
 })
@@ -81,6 +89,7 @@ reset.addEventListener('click', (e) => {
   firstNumber = '';
   secondNumber = "";
   operator = ""; 
+  justCalculated =false;
   showNum();
 })
 console.log(firstNumber, operator, secondNumber)
@@ -90,9 +99,12 @@ equalsButton.addEventListener('click', ()=> {
   if (operator === '' || firstNumber === '' || secondNumber === '') {
     return;
   } 
+  
   calculatePair()
   operator = '';
+  justCalculated = true;
   showNum();
+  
 })
 function calculatePair() {
   let answer = operate(operator, Number(firstNumber), Number(secondNumber));
