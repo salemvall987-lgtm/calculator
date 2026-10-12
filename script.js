@@ -74,7 +74,9 @@ allOperators.forEach((allOperator)=> {
       return;
     } 
     if (operator !== '' && secondNumber !== '') {
-      calculatePair();
+      if (!calculatePair()) {
+        return;
+      }
     }
     operator = e.target.dataset.operator;
     justCalculated = false;
@@ -100,16 +102,27 @@ equalsButton.addEventListener('click', ()=> {
     return;
   } 
   
-  calculatePair()
+  if (!calculatePair()) {
+    return;
+  }
   operator = '';
   justCalculated = true;
   showNum();
   
 })
 function calculatePair() {
+  if (operator === '/' && Number(secondNumber) === 0) {
+    firstNumber = '';
+    secondNumber ='';
+    operator = '';
+    justCalculated = false;
+    display.textContent = "Nice try! You can't divide by zero.";
+    return false;
+  }
   let answer = operate(operator, Number(firstNumber), Number(secondNumber));
   firstNumber = String(answer);
   secondNumber = '';
+  return true;
 };
 
 
