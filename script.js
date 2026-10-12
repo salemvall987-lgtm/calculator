@@ -94,7 +94,6 @@ reset.addEventListener('click', (e) => {
   justCalculated =false;
   showNum();
 })
-console.log(firstNumber, operator, secondNumber)
 
 let equalsButton = document.querySelector('.result');
 equalsButton.addEventListener('click', ()=> {
@@ -120,7 +119,7 @@ function calculatePair() {
     return false;
   }
   let answer = operate(operator, Number(firstNumber), Number(secondNumber));
-  firstNumber = String(answer);
+  firstNumber = String(answer.toFixed(2)); 
   secondNumber = '';
   return true;
 };
